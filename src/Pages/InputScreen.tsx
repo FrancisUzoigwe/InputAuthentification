@@ -127,7 +127,7 @@ const Main = styled.div`
 const Container = styled.div`
   width: 100%;
   height: calc(100vh - 60px);
-  background-color: #000000;
+  background-color: #ffff;
   display: flex;
   justify-content: center;
   align-items: center;

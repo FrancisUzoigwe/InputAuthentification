@@ -36,23 +36,23 @@ const DisplayScreen = () => {
 export default DisplayScreen;
 
 const Card = styled.div`
-  width: 45%;
-  height: 200px;
+  width: 40%;
+  height: 150px;
   border: 1px solid black;
 `;
 
 const Line = styled.div`
-width: 15px;
-height: 230px;
+width: 10px;
+height: 170px;
 background-color: green;
 margin-left: 20px;
 position: absolute;
-margin-left: 13px;
+margin-left: 10px;
 `;
 
 const Dot = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-color: green;
   position: absolute;
@@ -63,7 +63,7 @@ const Dot = styled.div`
 const LineHold = styled.div`
   display: flex;
   margin-left: 20px;
-  margin-top: 80px;
+  margin-top: 70px;
   /* flex-direction: column; */
   position: relative;
   ;
