@@ -1,34 +1,70 @@
-import React from "react";
 import styled from "styled-components";
+//At this point i would go copy a link from react-hook-form.com
+import {useForm} from "react-hook-form";
+import * as yup from "yup";
+import moment from "moment";
+import {yupResolver} from "@hookform/resolvers/yup"
+import {v4 as uuiddv4} from "uuid"
+import { createTask } from "../Utils/APIs";
+
+
 
 const InputScreen = () => {
+const inputSchema = yup.object({
+  task: yup.string().required("Task cannot be empty"),
+  avatar: yup.string().required("Avatar cannot be empty"),
+  priority: yup.string().required("Priority must be selected")
+})
+
+const {
+  register,
+  reset,
+  formState: {errors},
+  handleSubmit
+} = useForm({
+  resolver: yupResolver(inputSchema)
+})
+
+const onHandleSubmit = handleSubmit((res: any) => {
+  const {task, avatar, priority} = res;
+  const date = Date.now()
+  console.log(moment(date).fromNow())
+  createTask({
+    time: date,
+    id: uuiddv4(),
+    reaction: 0,
+    task,
+    avatar,
+    priority
+  })
+  reset()
+})
+
   return (
     <div>
       <Container>
-        <Main>
-          <Holder>
-            <Wrapper>
-              <Box>
-                <Name>Task</Name>
-                <InputHolder>
-                  <Input placeholder="Add Task" />
-                </InputHolder>
-              </Box>
-              <Box>
-                <Name>Avatar</Name>
-                <InputHolder>
-                  <Input placeholder="Add Avatar" />
-                </InputHolder>
-              </Box>
-              <Box>
-                <Name>Priority</Name>
-                <InputHolder>
-                  <Input placeholder="Add Priority" />
-                </InputHolder>
-              </Box>
-              <Button>Hello</Button>
-            </Wrapper>
-          </Holder>
+        <Main onSubmit={onHandleSubmit}>
+          <InputHolder>
+            <InputTitle>Task</InputTitle>
+            <Input placeholder="Task" {...register("task")}/>
+            <Error>{errors.task && "Enter a task"}</Error>
+          </InputHolder>
+          <InputHolder>
+            <InputTitle>Avatar</InputTitle>
+            <Input placeholder="Avatar" {...register("avatar")}/>
+            <Error>{errors.avatar && "Enter an avatar"}</Error>
+          </InputHolder>
+
+          <InputHolder>
+            <InputTitle>Priority</InputTitle>
+            <Selector {...register("priority")}>
+              <Options>Low</Options>
+              <Options>High</Options>
+              <Options>Urgent</Options>
+            </Selector>
+            <Error>{errors.priority && "Please select a state"}</Error>
+          </InputHolder>
+          <Button type="submit">Add Task</Button>
         </Main>
       </Container>
     </div>
@@ -36,99 +72,83 @@ const InputScreen = () => {
 };
 
 export default InputScreen;
+const Options = styled.option`
+  margin: 10px 0;
+`;
 
-const Name = styled.div`
-  background-color: white;
+const Selector = styled.select`
+  /* border: 1px solid silver; */
+  position: relative;
+  height: 40px;
+  border-radius: 3px;
+  width: 100%;
+  outline: none;
+  padding-left: 10px;
+`;
+
+const Error = styled.div`
+  color: red;
+  font-size: 11px;
   position: absolute;
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: -11px;
-  margin-left: 10px;
+  right: 0;
+`;
+const Button = styled.button`
+  border-radius: 5px;
+  background-color: #023b81;
+  color: white;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  outline: none;
+  border: 0;
+  width: 100%;
+  cursor: pointer;
 `;
 
 const Input = styled.input`
-  border: none;
   outline: none;
-  width: 100%;
-  height: 28px;
-  font-size: 15px;
-  font-weight: 500;
+  border: 0;
+  width: 93%;
+  height: 95%;
   padding-left: 10px;
-
+  margin-left: 5px;
   ::placeholder {
-    padding-left: 2px;
-    font-size: 13px;
-    font-weight: 600;
-    color: silver;
+    font-family: Montserrat;
   }
+`;
+
+const InputTitle = styled.div`
+  font-size: 12px;
+  position: absolute;
+  top: -9px;
+  left: 10px;
+  background-color: white;
+  padding: 0 5px;
+  z-index: 10;
 `;
 
 const InputHolder = styled.div`
-  width: 100%;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-`;
-
-const Box = styled.div`
-  width: 95%;
-  height: 40px;
   border: 1px solid silver;
   position: relative;
-  border-radius: 2px;
-  margin-top: 12px;
-`;
-
-const Button = styled.button`
-  width: 95%;
-  height: 35px;
+  height: 40px;
   border-radius: 3px;
-  border: none;
-  color: white;
-  font-size: 17px;
-  margin-top: 15px;
-  background-color: blue;
-  font-weight: 500;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 450ms;
-
-  :hover {
-    transform: translate(0px, -3px);
-    cursor: pointer;
-  }
+  margin: 18px 0;
 `;
 
-const Wrapper = styled.div`
+const Main = styled.form`
+  width: 300px;
   border: 1px solid silver;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+  padding: 10px;
 
-const Holder = styled.div`
-  width: 50%;
-  height: auto;
-`;
-
-const Main = styled.div`
-  width: 50%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  border-radius: 15px;
+  border-radius: 5px;
 `;
 
 const Container = styled.div`
   width: 100%;
-  height: calc(100vh - 60px);
-  background-color: #ffff;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: calc(100vh - 80px);
 `;
