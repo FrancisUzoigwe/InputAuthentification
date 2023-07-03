@@ -23,11 +23,11 @@ const DisplayScreen = () => {
                   {props.task}: {moment(props.time).fromNow()}
                 </Text>
                 <SecondPart>
-                  <ID>{props.id}</ID>
+                  <ID>{props.id?.slice(0,5)}</ID>
                   <Hold>
                     <Reaction>{props.reaction}</Reaction>
                     <Priority>{props.priority}</Priority>
-                    <Avatar>{props.avatar}</Avatar>
+                    <Avatar src={props.avatar}/>
                   </Hold>
                 </SecondPart>
               </Card>
@@ -70,10 +70,11 @@ const Priority = styled.div`
   align-items: center;
 `;
 
-const Avatar = styled.div`
+const Avatar = styled.img`
   width: 45px;
   height: 45px;
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 const Hold = styled.div`
