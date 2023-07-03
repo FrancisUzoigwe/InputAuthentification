@@ -1,28 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { iData } from "../Utils/Interfaces";
+import { readTask } from "../Utils/APIs";
+import moment from "moment";
 
 const DisplayScreen = () => {
+  const [state, setState] = useState<iData[]>([]);
+  useEffect(() => {
+    readTask().then((res: iData[]) => {
+      return setState(res);
+    });
+  });
+
   return (
     <div>
       <Container>
         <Main>
-          <Holder>
-            <Card>
-              <Text></Text>
-              <SecondPart>
-                <ID></ID>
-                <Hold>
-                  <Reaction></Reaction>
-                  <Priority></Priority>
-                  <Avatar></Avatar>
-                </Hold>
-              </SecondPart>
-            </Card>
-            <LineHold>
-              <Line></Line>
-              <Dot></Dot>
-            </LineHold>
-          </Holder>
+          {state?.map((props: iData, i: number) => (
+            <Holder>
+              <Card>
+                <Text>
+                  {props.task}: {moment(props.time).fromNow()}
+                </Text>
+                <SecondPart>
+                  <ID>{props.id}</ID>
+                  <Hold>
+                    <Reaction>{props.reaction}</Reaction>
+                    <Priority>{props.priority}</Priority>
+                    <Avatar>{props.avatar}</Avatar>
+                  </Hold>
+                </SecondPart>
+              </Card>
+              <LineHold>
+                <Line></Line>
+                <Dot></Dot>
+              </LineHold>
+            </Holder>
+          ))}
         </Main>
       </Container>
     </div>
@@ -32,34 +46,51 @@ const DisplayScreen = () => {
 export default DisplayScreen;
 
 const Text = styled.div`
-width: 95%;
-height: 80px;
-margin-top: 5px;
-background-color: grey;
+  width: 95%;
+  height: 80px;
+  margin-top: 5px;
 `;
 
 const ID = styled.div`
-width: 30px;
-height: 30px;
-background-color: black;
+  width: 70px;
+  height: 30px;
 `;
 
-const Reaction = styled.div``;
+const Reaction = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+`;
 
-const Priority = styled.div``;
+const Priority = styled.div`
+  width: 40px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-const Avatar = styled.div``;
+const Avatar = styled.div`
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+`;
 
-const Hold = styled.div``;
+const Hold = styled.div`
+  width: 40%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 const SecondPart = styled.div`
-width: 95%;
-height: 50px;
-background-color: grey;
-margin-top: 10px;
-display: flex;
-justify-content: space-between;
-align-items: center;
+  width: 95%;
+  height: 50px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Card = styled.div`
@@ -72,22 +103,21 @@ const Card = styled.div`
 `;
 
 const Line = styled.div`
-width: 10px;
-height: 170px;
-background-color: green;
-margin-left: 20px;
-position: absolute;
-margin-left: 10px;
+  width: 10px;
+  height: 170px;
+  margin-left: 20px;
+  position: absolute;
+  background-color: green;
+  margin-left: 10px;
 `;
 
 const Dot = styled.div`
   width: 30px;
+  background-color: green;
   height: 30px;
   border-radius: 50%;
-  background-color: green;
   position: absolute;
   margin-top: -10px;
-
 `;
 
 const LineHold = styled.div`
@@ -96,7 +126,6 @@ const LineHold = styled.div`
   margin-top: 70px;
   /* flex-direction: column; */
   position: relative;
-  ;
 `;
 
 const Holder = styled.div`
@@ -107,15 +136,12 @@ const Holder = styled.div`
 const Main = styled.div`
   width: 70%;
   height: auto;
-  background-color: white;
-
 `;
 
 const Container = styled.div`
   width: 100%;
   /* height: calc(auto - 60px); */
   height: auto;
-  background-color: white;
   display: flex;
   justify-content: center;
   /* align-items: center; */
