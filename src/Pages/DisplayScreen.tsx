@@ -20,14 +20,15 @@ const DisplayScreen = () => {
             <Holder>
               <Card>
                 <Text>
-                  {props.task}: {moment(props.time).fromNow()}
+                  {props.task}
+                  <Time>{moment(props.time).fromNow()}</Time>
                 </Text>
                 <SecondPart>
-                  <ID>{props.id?.slice(0,5)}</ID>
+                  <ID>{props.id?.slice(0, 5)}</ID>
                   <Hold>
                     <Reaction>{props.reaction}</Reaction>
                     <Priority>{props.priority}</Priority>
-                    <Avatar src={props.avatar}/>
+                    <Avatar src={props.avatar} />
                   </Hold>
                 </SecondPart>
               </Card>
@@ -45,21 +46,37 @@ const DisplayScreen = () => {
 
 export default DisplayScreen;
 
+const Time = styled.div`
+  color: grey;
+  font-size: 12px;
+  position: absolute;
+  margin-top: 60px;
+`;
+
 const Text = styled.div`
   width: 95%;
   height: 80px;
   margin-top: 5px;
+  position: relative;
 `;
 
 const ID = styled.div`
   width: 70px;
   height: 30px;
+  color: blue;
+  font-size: 15px;
 `;
 
 const Reaction = styled.div`
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  cursor: pointer;
+  /* margin-top: 10px; */
+  background: #e6e6e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Priority = styled.div`

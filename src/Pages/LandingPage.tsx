@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 const LandingPage = () => {
   return (
@@ -15,12 +15,42 @@ const LandingPage = () => {
             you get em done
           </SmallText>
         </TextHolder>
+        <Holder>
+          <But to="input">Get Started</But>
+          <But to="display">View Tasks</But>
+        </Holder>
       </Container>
     </div>
   );
 };
 
 export default LandingPage;
+
+const Holder = styled.div`
+width: 22%;
+height: 100px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+`;
+
+const But = styled(NavLink)`
+  padding: 15px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+  background-color: darkorange;
+  border: none;
+  font-weight: 500;
+  font-family: Nova Oval;
+  margin-top: 40px;
+  transition: all 400ms;
+
+  :hover {
+    cursor: pointer;
+    transform: translate(0px, -6px);
+  }
+`;
 
 const SmallText = styled.div`
   font-size: 15px;
@@ -45,5 +75,6 @@ const Container = styled.div`
   color: white;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
 `;

@@ -74,6 +74,7 @@ const onHandleSubmit = handleSubmit((res: any) => {
 export default InputScreen;
 const Options = styled.option`
   margin: 10px 0;
+  font-family: Nova Oval;
 `;
 
 const Selector = styled.select`
@@ -101,6 +102,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   margin-top: 10px;
+  font-family: Nova Oval;
   outline: none;
   border: 0;
   width: 100%;
