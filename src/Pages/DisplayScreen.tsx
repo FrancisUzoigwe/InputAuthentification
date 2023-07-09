@@ -3,14 +3,18 @@ import styled from "styled-components";
 import { iData } from "../Utils/Interfaces";
 import { readTask } from "../Utils/APIs";
 import moment from "moment";
+import { MdDangerous } from "react-icons/md";
+import { FiMenu } from "react-icons/fi";
+import { IoIosArrowDown } from "react-icons/io";
 
 const DisplayScreen = () => {
   const [state, setState] = useState<iData[]>([]);
+
   useEffect(() => {
     readTask().then((res: iData[]) => {
       return setState(res);
     });
-  });
+  }, []);
 
   return (
     <div>
@@ -27,7 +31,17 @@ const DisplayScreen = () => {
                   <ID>{props.id?.slice(0, 5)}</ID>
                   <Hold>
                     <Reaction>{props.reaction}</Reaction>
-                    <Priority>{props.priority}</Priority>
+                    <Priority>
+                      {props.priority === "Urgent" ? (
+                        <MdDangerous color="red" size={25}/>
+                      ) : props.priority === "Low" ? (
+                        <IoIosArrowDown  color="green" size={20}/>
+                      ) : props.priority === "High" ? (
+                        <FiMenu color="orange" size={20}/>
+                      ) : (
+                        <IoIosArrowDown color="green" size={20}/>
+                      )}
+                    </Priority>
                     <Avatar src={props.avatar} />
                   </Hold>
                 </SecondPart>
@@ -73,7 +87,7 @@ const Reaction = styled.div`
   border-radius: 50%;
   cursor: pointer;
   /* margin-top: 10px; */
-  background: #e6e6e6;
+  /* background: #e6e6e6; */
   display: flex;
   justify-content: center;
   align-items: center;

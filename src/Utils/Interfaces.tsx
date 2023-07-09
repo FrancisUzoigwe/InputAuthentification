@@ -4,5 +4,5 @@ export interface iData {
     time?: number,
     avatar?: string,
     id?: string,
-    reaction?: number
+    reaction?: any
 }

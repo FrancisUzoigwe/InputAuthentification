@@ -16,8 +16,7 @@ const LandingPage = () => {
           </SmallText>
         </TextHolder>
         <Holder>
-          <But to="input">Get Started</But>
-          <But to="display">View Tasks</But>
+          <But to='auth/signup'>Get Started</But>
         </Holder>
       </Container>
     </div>
@@ -27,11 +26,11 @@ const LandingPage = () => {
 export default LandingPage;
 
 const Holder = styled.div`
-width: 22%;
-height: 100px;
-display: flex;
-justify-content: space-between;
-align-items: center;
+  width: 22%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const But = styled(NavLink)`
@@ -44,11 +43,12 @@ const But = styled(NavLink)`
   font-weight: 500;
   font-family: Nova Oval;
   margin-top: 40px;
-  transition: all 400ms;
+  transition: all 500ms;
 
   :hover {
     cursor: pointer;
-    transform: translate(0px, -6px);
+    /* transform: translate(0px, -10px); */
+    transform: scale(0.9);
   }
 `;
 
@@ -70,11 +70,12 @@ const TextHolder = styled.div`
 
 const Container = styled.div`
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 70px);
   background-color: black;
   color: white;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;

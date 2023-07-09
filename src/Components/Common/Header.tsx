@@ -7,7 +7,7 @@ const Header = () => {
     <div>
    <Container>
     <Main>
-        <Logo to='/'>Francis</Logo>
+        <Logo to='/'>Francis .K. Uzoigwe</Logo>
         <NavHolder>
             <Navs to='input'>Input</Navs>
             <Navs to='display'>Display</Navs>
